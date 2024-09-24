@@ -53,12 +53,17 @@ struct ContentView: View {
                     let platform = platforms[index]
                     
                     if platform.isVisible {
-                        PlatformView(width: settings.platformWidth, height: settings.platformHeight)
-                            .position(x: platform.positionX, y: platform.positionY)
+                        PlatformView(
+                            width: settings.platformWidth,
+                            height: settings.platformHeight,
+                            platformType: platform.type
+                        )
+                        .position(x: platform.positionX, y: platform.positionY)
                     }
                 }
                 
                 DoodlerView(height: settings.doodlerHeight)
+                    .scaleEffect(x: doodlerXVelocity > 0 ? 1 : -1)
                     .position(x: doodlerXPosition, y: doodlerYPosition)
                 
                 if gameState == .ready {

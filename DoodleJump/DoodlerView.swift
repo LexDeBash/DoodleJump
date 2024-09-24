@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct DoodlerView: View {
-    // Высота дудлера передается через инициализацию
+    
     let height: Double
+
     
     var body: some View {
-        Circle()
-            .frame(width: height)
-            .foregroundStyle(.yellow)
-            .overlay(
-                Circle().stroke(Color.black, lineWidth: 2)
-            )
+        Image(.doodler)
+            .resizable()
+            .frame(width: height, height: height)
     }
 }
 

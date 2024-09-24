@@ -10,14 +10,15 @@ import SwiftUI
 struct PlatformView: View {
     let width: Double
     let height: Double
+    let platformType: PlatformType
     
     var body: some View {
-        Capsule()
+        Image(platformType == .disappearingPlatform ? .platformYellow : .platformGreen)
+            .resizable()
             .frame(width: width, height: height)
-            .foregroundStyle(.green)
     }
 }
 
 #Preview {
-    PlatformView(width: 100, height: 20)
+    PlatformView(width: 100, height: 20, platformType: .staticPlatform)
 }
