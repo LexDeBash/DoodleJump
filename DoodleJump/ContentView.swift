@@ -37,6 +37,7 @@ struct ContentView: View {
         // Дудлер — пока это просто окружность
         GeometryReader { geometry in
             let width = geometry.size.width
+            let height = geometry.size.height
             
             ZStack {
                 // Отображение счета в левом верхнем углу
@@ -103,7 +104,7 @@ struct ContentView: View {
                     applyGravity(width: width)
                     limitFallToBottomEdge()
                     handleScrolling()
-                    updatePlatforms(geometry: geometry)
+                    updatePlatforms(using: height)
                     applyHorizontalMovement(width: width)
                 }
             }
@@ -197,16 +198,16 @@ private extension ContentView {
         }
     }
     
-    func updatePlatforms(geometry: GeometryProxy) {
+    func updatePlatforms(using height: Double) {
         // Обновляем движущиеся платформы
         updateMovingPlatforms()
 
         // Удаляем платформы, которые вышли за нижний край экрана
-        platforms.removeAll { $0.positionY > geometry.size.height + settings.platformHeight || !$0.isVisible }
+        platforms.removeAll { $0.positionY > height + settings.platformHeight || !$0.isVisible }
         
         // Добавляем новые платформы, если их меньше 5
         while platforms.count < 5 {
-            let newPlatformY = (platforms.min { $0.positionY < $1.positionY }?.positionY ?? geometry.size.height) - Double.random(in: 80...100)
+            let newPlatformY = (platforms.min { $0.positionY < $1.positionY }?.positionY ?? height) - Double.random(in: 80...100)
             let newPlatformType: PlatformType = [.staticPlatform, .movingPlatform, .disappearingPlatform].randomElement()! // Случайный тип платформы
             platforms.append(Platform(positionY: newPlatformY, positionX: Double.random(in: 50...350), type: newPlatformType))
         }
